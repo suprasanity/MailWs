@@ -27,10 +27,10 @@ public class MailService {
                     .entity("Missing properties: " + missingProperties);
         }
 
-        //mailer.send(
-          //      Mail.withText(emailDTO.getRecipient(), emailDTO.getSubject(), emailDTO.getContent())
-       // );
-        return null;
+        mailer.send(
+                Mail.withText(emailDTO.getRecipient(), emailDTO.getSubject(), emailDTO.getContent())
+        );
+        return Response.ok(emailDTO);
     }
     private String checkMissingProperties(EmailDTO emailDTO) {
         StringBuilder missingProperties = new StringBuilder();
