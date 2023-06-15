@@ -92,11 +92,3 @@ EXPOSE 8000
 USER 185
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
-ENV MAILER_HOST="smtp.gmail.com"
-ENV MAILER_PORT="587"
-ENV MAILER_PASSWORD=""
-ENV MAILER_USERNAME=""
-ENV MAILER_JDCB_URL=""
-ENV MAILER_FROM=""
-ENV MAILER_PASSWORD_DB=""
-ENV MAILER_USER_DB=""
