@@ -18,8 +18,8 @@ public class MailService {
     }
 
     public Response.ResponseBuilder sendEmail(EmailDTO emailDTO) {
-        MailEntity mail = new MailEntity(emailDTO);
-        mailRepository.save(mail);
+     //   MailEntity mail = new MailEntity(emailDTO);
+     //   mailRepository.save(mail);
         String missingProperties = checkMissingProperties(emailDTO);
 
         if (!missingProperties.isEmpty()) {
