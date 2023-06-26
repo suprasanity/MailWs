@@ -6,6 +6,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
+import java.io.File;
+import java.net.http.HttpResponse;
+
 @ApplicationScoped
 public class MailService {
     @Inject
@@ -26,11 +29,13 @@ public class MailService {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Missing properties: " + missingProperties);
         }
-
-        //mailer.send(
-          //      Mail.withText(emailDTO.getRecipient(), emailDTO.getSubject(), emailDTO.getContent())
-       // );
-        return null;
+        Mail m= Mail.withText(emailDTO.getRecipient(), emailDTO.getSubject(), emailDTO.getContent());
+      m.addAttachment("my-file-2.txt",
+                new File("C:\\Users\\yann\\Desktop\\test.txt"), "text/plain");
+        mailer.send(
+                m
+        );
+        return Response.ok(emailDTO);
     }
     private String checkMissingProperties(EmailDTO emailDTO) {
         StringBuilder missingProperties = new StringBuilder();

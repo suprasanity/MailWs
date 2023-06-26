@@ -1,15 +1,16 @@
 package org.acme;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "mail")
 public class MailEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mail_seq")
+    @SequenceGenerator(name = "mail_seq", sequenceName = "mail_sequence", allocationSize = 1)
     private Long id;
 
     public MailEntity(EmailDTO emailDTO) {
@@ -17,9 +18,19 @@ public class MailEntity {
         this.subject = emailDTO.getSubject();
         this.content = emailDTO.getContent();
     }
-
+    @OneToMany(mappedBy = "mail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MailAttachmentEntity> attachments = new ArrayList<>();
     public MailEntity() {
 
+    }
+    public void addAttachment(MailAttachmentEntity attachment) {
+        attachments.add(attachment);
+        attachment.setMail(this);
+    }
+
+    public void removeAttachment(MailAttachmentEntity attachment) {
+        attachments.remove(attachment);
+        attachment.setMail(null);
     }
 
     public void setId(Long id) {
